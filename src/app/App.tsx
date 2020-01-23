@@ -7,6 +7,12 @@ import "react-circular-progressbar/dist/styles.css";
 const UPLOAD_SUCCESS_URL = "http://www.mocky.io/v2/5e29b0b93000006500faf227";
 // const UPLOAD_FAILED_URL ='http://www.mocky.io/v2/5e29b0a5300000cd68faf225';
 
+const acceptedTypes = [
+    'image/png',
+    'image/jpg',
+    'image/jpeg',
+];
+
 const App: FC = (): JSX.Element => {
     const [file, setFile] = useState();
     const [uploadProgress, updateUploadProgress] = useState(0);
@@ -21,8 +27,18 @@ const App: FC = (): JSX.Element => {
         reader.readAsDataURL(img);
     }
 
+    const isValidFileType = (fileType: string): boolean => {
+        return acceptedTypes.includes(fileType);
+    };
+
     const handleFileUpload = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        
+        if (!isValidFileType(file.type)) {
+            alert('Only images are allowed (png or jpg)');
+            return;
+        }
+        
         setUploading(true);
         const formData = new FormData();
         formData.append('file', file);
@@ -69,6 +85,7 @@ const App: FC = (): JSX.Element => {
                     <input
                         className="file-input"
                         type="file" name="file"
+                        accept={acceptedTypes.toString()}
                         onChange={(e) => {
                             if (e.target.files && e.target.files.length > 0) {
                                 setFile(e.target.files[0])
