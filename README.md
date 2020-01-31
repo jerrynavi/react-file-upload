@@ -80,7 +80,9 @@ export default App;
 ```
 
 What we have now is an empty div for previewing an uploaded image and a form setup with a file input. Let's add some CSS to make things pretty.
+
 ![Pretty gif](https://media.tenor.com/images/8bcf39d6f2b69f70f43993d9f208c9db/tenor.gif)
+
 Open the `App.css` file and replace the existing contents with the following:
 
 ```css
